@@ -109,7 +109,29 @@
             </p>
         </div>
     </section>
-
+<!-- Contact Us Section with Formspree Form -->
+<section class="py-12 bg-[#FDFBF6]">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-teal-800 text-center mb-4">SUBMIT YOUR PROJECT HERE</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto text-center mb-8">
+    JUST DROP YOU CODE WITH TITLE IN THE MESSAGE BOX BELOW AND WE WILL ADD IT TO OUR PROJECTS PAGE.
+      </p>
+      <form action="https://formspree.io/f/meogyjdb" method="POST" class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Your Email:</label>
+          <input type="email" name="email" required class="mt-1 w-full border border-teal-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Your Message:</label>
+          <textarea name="message" rows="5" required class="mt-1 w-full border border-teal-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+        </div>
+        <button type="submit" class="btn-submit-form w-full py-2 rounded-lg font-semibold text-lg shadow hover:shadow-lg transition-all duration-300">
+          Send
+        </button>
+      </form>
+    </div>
+  </section>
+  
     <footer class="text-center p-6 mt-0 border-t border-slate-200 bg-slate-100">
         <p class="text-slate-500">&copy; <span id="currentYear"></span> Arduino Code Hub. Share and discover.</p>
         <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
