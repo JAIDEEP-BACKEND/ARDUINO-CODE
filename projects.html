@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900">
+
+  <!-- Projects Section -->
+  <section class="py-12">
+    <div class="container mx-auto px-4 max-w-5xl">
+
+      <!-- Search Bar -->
+      <div class="mb-10 text-center">
+        <input id="searchInput" type="text" placeholder="Search projects..." class="w-72 px-4 py-2 rounded-l border border-emerald-500 focus:outline-none">
+        <button onclick="searchProjects()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-r transition">Search</button>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="text-3xl font-bold text-emerald-700 text-center mb-10">All Arduino Projects</h2>
+
+      <!-- Projects Grid -->
+      <div id="projectCards" class="grid gap-6">
+
+        <!-- Project Card 1 -->
+        <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="project-title text-xl font-semibold text-emerald-700">Blink LED on Pin 13</h3>
+            <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
+          </div>
+          <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
+// Blink LED on pin 13
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+}
+</code></pre>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="project-title text-xl font-semibold text-emerald-700">Temperature Display with DHT11</h3>
+            <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
+          </div>
+          <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
+#include &lt;DHT.h&gt;
+
+#define DHTPIN 2     
+#define DHTTYPE DHT11 
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float temp = dht.readTemperature();
+  Serial.print("Temperature: ");
+  Serial.println(temp);
+  delay(2000);
+}
+</code></pre>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="project-title text-xl font-semibold text-emerald-700">Control Relay via Push Button</h3>
+            <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
+          </div>
+          <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
+int relayPin = 7;
+int buttonPin = 2;
+
+void setup() {
+  pinMode(relayPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+}
+
+void loop() {
+  if (digitalRead(buttonPin) == HIGH) {
+    digitalWrite(relayPin, HIGH);
+  } else {
+    digitalWrite(relayPin, LOW);
+  }
+}
+</code></pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Copy Code Script -->
+  <script>
+    function copyCode(button) {
+      const codeBlock = button.parentElement.nextElementSibling.querySelector('code');
+      const text = codeBlock.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        button.innerText = 'Copied!';
+        setTimeout(() => {
+          button.innerText = 'Copy Code';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+  </script>
+
+  <!-- Search Function Script -->
+  <script>
+    function searchProjects() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll(".project-card");
+
+      cards.forEach(card => {
+        const title = card.querySelector(".project-title").innerText.toLowerCase();
+        if (title.includes(input)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

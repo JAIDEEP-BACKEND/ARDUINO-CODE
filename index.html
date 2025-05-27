@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Code Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF6;
+            color: #334155;
+        }
+        .classical-header {
+            background-color: #004D40;
+            color: #FDFBF6;
+        }
+        .btn-primary-header {
+            background-color: #FDFBF6;
+            color: #004D40;
+            border: 1px solid #004D40;
+        }
+        .btn-primary-header:hover {
+            background-color: #E0E0E0;
+        }
+        .btn-secondary-header {
+            background-color: transparent;
+            color: #FDFBF6;
+            border: 1px solid #FDFBF6;
+        }
+        .btn-secondary-header:hover {
+            background-color: rgba(253, 251, 246, 0.1);
+        }
+        .form-section-modal {
+            background-color: #FFFFFF;
+        }
+        .btn-submit-form {
+            background-color: #00695C;
+            color: #FDFBF6;
+        }
+        .btn-submit-form:hover {
+            background-color: #004D40;
+        }
+        .search-bar {
+            border: 2px solid #004D40;
+        }
+        .project-card-item {
+            border-left: 5px solid #00695C;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00695C;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hero-section {
+            background: linear-gradient(to bottom, rgba(0, 77, 64, 0.05), rgba(253, 251, 246, 0.5)), url('https://placehold.co/1920x600/FDFBF6/004D40?text=Arduino+Sketches');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="classical-header p-4 shadow-md sticky top-0 z-40">
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold tracking-tight">Arduino Code Hub</a>
+
+            <nav class="space-x-3 order-2 md:order-3">
+                <a href="projects.html" class="btn-primary-header font-medium py-2 px-4 rounded-lg shadow hover:shadow-md transition-all duration-300">Projects</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="loadingIndicator" class="hidden fixed inset-0 bg-black bg-opacity-50 flex-col justify-center items-center z-[101]">
+        <div class="loader !w-12 !h-12 border-t-[#FDFBF6]"></div>
+        <p class="ml-3 text-white text-lg mt-3">Loading...</p>
+    </div>
+
+    <section class="hero-section text-center py-16 md:py-24 px-4">
+        <div class="container mx-auto bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-teal-800 mb-6">Discover & Share Arduino Creations</h2>
+            <p class="text-lg text-slate-600 mb-10 max-w-2xl mx-auto">
+                Dive into a community-driven collection of Arduino projects. Find inspiration, share your code, and collaborate.
+            </p>
+            <a href="projects.html" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-10 rounded-lg text-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
+                Explore All Projects
+            </a>
+        </div>
+    </section>
+
+  
+
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-teal-800 mb-4">About Us</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                Arduino Code Hub is a platform dedicated to hobbyists, students, and innovators who love building with Arduino. We aim to provide a collaborative environment for sharing projects, ideas, and learning resources.
+            </p>
+        </div>
+    </section>
+
+    <footer class="text-center p-6 mt-0 border-t border-slate-200 bg-slate-100">
+        <p class="text-slate-500">&copy; <span id="currentYear"></span> Arduino Code Hub. Share and discover.</p>
+        <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+    </footer>
+
+</body>
+</html>
