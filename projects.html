@@ -27,20 +27,52 @@
         <!-- Project Card 1 -->
         <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="project-title text-xl font-semibold text-emerald-700">Blink LED on Pin 13</h3>
+            <h3 class="project-title text-xl font-semibold text-emerald-700">PRINTING TEMPRATURE SENSOR VALUE ON SERIAL</h3>
             <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
           </div>
           <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
-// Blink LED on pin 13
+// Include the DHT library
+#include <DHT.h>
+
+// Define the DHT pin and sensor type
+#define DHTPIN 2        // Digital pin connected to DHT11
+#define DHTTYPE DHT11   // DHT 11
+
+// Initialize DHT sensor
+DHT dht(DHTPIN, DHTTYPE);
+
 void setup() {
-  pinMode(13, OUTPUT);
+  // Start the Serial Monitor
+  Serial.begin(9600);
+
+  // Start the DHT sensor
+  dht.begin();
 }
 
 void loop() {
-  digitalWrite(13, HIGH);
-  delay(1000);
-  digitalWrite(13, LOW);
-  delay(1000);
+  // Wait a few seconds between measurements
+  delay(2000);
+
+  // Read temperature as Celsius
+  float temperature = dht.readTemperature();
+
+  // Read humidity
+  float humidity = dht.readHumidity();
+
+  // Check if any reads failed
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  // Print temperature and humidity to Serial Monitor
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.println(" %");
 }
 </code></pre>
         </div>
@@ -48,26 +80,49 @@ void loop() {
         <!-- Project Card 2 -->
         <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="project-title text-xl font-semibold text-emerald-700">Temperature Display with DHT11</h3>
+            <h3 class="project-title text-xl font-semibold text-emerald-700">ULTRASONIC SENSOR READING</h3>
             <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
           </div>
           <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
-#include &lt;DHT.h&gt;
+// Define pin numbers
+const int trigPin = 9;
+const int echoPin = 10;
 
-#define DHTPIN 2     
-#define DHTTYPE DHT11 
-DHT dht(DHTPIN, DHTTYPE);
+// Variable for duration and distance
+long duration;
+float distanceCm;
 
 void setup() {
+  // Start the Serial Monitor
   Serial.begin(9600);
-  dht.begin();
+
+  // Set trigPin as output and echoPin as input
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 }
 
 void loop() {
-  float temp = dht.readTemperature();
-  Serial.print("Temperature: ");
-  Serial.println(temp);
-  delay(2000);
+  // Clear the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  // Trigger the sensor by setting trigPin HIGH for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Read the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+
+  // Calculate the distance (speed of sound is 34300 cm/s)
+  distanceCm = duration * 0.034 / 2;
+
+  // Print the distance to Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distanceCm);
+  Serial.println(" cm");
+
+  delay(500); // Wait half a second before next reading
 }
 </code></pre>
         </div>
@@ -75,24 +130,51 @@ void loop() {
         <!-- Project Card 3 -->
         <div class="project-card bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-600">
           <div class="flex justify-between items-center mb-4">
-            <h3 class="project-title text-xl font-semibold text-emerald-700">Control Relay via Push Button</h3>
+            <h3 class="project-title text-xl font-semibold text-emerald-700">TO PRINT TEXT ON 0.69 OLED</h3>
             <button onclick="copyCode(this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm px-3 py-1 rounded transition">Copy Code</button>
           </div>
           <pre class="overflow-auto bg-slate-100 p-4 rounded text-sm text-slate-800"><code class="language-c">
-int relayPin = 7;
-int buttonPin = 2;
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// OLED display size
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// Reset pin not used with I2C OLED
+#define OLED_RESET     -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
-  pinMode(relayPin, OUTPUT);
-  pinMode(buttonPin, INPUT);
+  // Start the Serial Monitor
+  Serial.begin(9600);
+
+  // Initialize the OLED display
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("OLED init failed"));
+    while (true); // Infinite loop if OLED not found
+  }
+
+  // Clear the display buffer
+  display.clearDisplay();
+
+  // Set text size and color
+  display.setTextSize(2);          // Size 2 = medium
+  display.setTextColor(SSD1306_WHITE);
+
+  // Set text position (X, Y)
+  display.setCursor(0, 10);
+  
+  // Put your name here 🌟
+  display.println("Hello Jaideep!");
+
+  // Display the content
+  display.display();
 }
 
 void loop() {
-  if (digitalRead(buttonPin) == HIGH) {
-    digitalWrite(relayPin, HIGH);
-  } else {
-    digitalWrite(relayPin, LOW);
-  }
+  // Nothing here for now
 }
 </code></pre>
         </div>
